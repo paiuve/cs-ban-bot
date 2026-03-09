@@ -1,0 +1,13 @@
+DISCORD_TOKEN=tokenul_botului_tau_aici
+DB_HOST=188.212.100.198
+DB_USER=client266_csgo
+DB_PASS=g14t7lNGEQh5
+DB_NAME=client266_csgo
+
+# ID-ul canalului Discord unde apare panoul de control cu butoane
+# (click dreapta pe canal -> Copy Channel ID)
+PANEL_CHANNEL_ID=0
+
+# ID-ul rolului care poate folosi butoanele (0 = toti membrii)
+# (click dreapta pe rol -> Copy Role ID)
+ADMIN_ROLE_ID=0
