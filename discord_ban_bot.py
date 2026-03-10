@@ -290,7 +290,11 @@ async def on_ready():
             # Sterge mesajele vechi ale botului din canal
             async for msg in channel.history(limit=20):
                 if msg.author == bot.user:
-                    await msg.delete()
+                    try:
+                        await msg.delete()
+                        await asyncio.sleep(1.0)
+                    except discord.HTTPException:
+                        pass
 
             embed = discord.Embed(
                 title="🎮 CS:GO Admin Panel — BC.LaLeagane.ro",
