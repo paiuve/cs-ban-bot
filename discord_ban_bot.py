@@ -16,6 +16,7 @@ Fisier .env:
 """
 
 import discord
+import asyncio
 from discord.ext import commands
 from discord import app_commands, ui
 import mysql.connector
@@ -390,6 +391,18 @@ async def setup(interaction: discord.Interaction, category: discord.CategoryChan
             )
             created.append(name)
             channel_ids[name] = new_ch.id
+            await asyncio.sleep(1.5)  # evita rate limit Discord
+        except discord.HTTPException as e:
+            if e.status == 429:
+                await asyncio.sleep(5)  # asteapta si incearca din nou
+                try:
+                    new_ch = await category.create_text_channel(name=name, topic=ch_info["topic"])
+                    created.append(name)
+                    channel_ids[name] = new_ch.id
+                except Exception as e2:
+                    skipped.append(f"{name} (eroare: {e2})")
+            else:
+                skipped.append(f"{name} (eroare: {e})")
         except Exception as e:
             skipped.append(f"{name} (eroare: {e})")
 
