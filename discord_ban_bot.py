@@ -5,14 +5,8 @@ Butoane + Formulare (Modals) pentru admin management si unban
 Instalare:
     pip install discord.py mysql-connector-python python-dotenv
 
-Fisier .env:
-    DISCORD_TOKEN=tokenul_botului
-    DB_HOST=188.212.100.198
-    DB_USER=client266_csgo
-    DB_PASS=g14t7lNGEQh5
-    DB_NAME=client266_csgo
-    ADMIN_ROLE_ID=id_rol_discord   (0 = toti pot folosi)
-    PANEL_CHANNEL_ID=id_canal      (unde apare panoul de control)
+Configurare: seteaza variabilele de mediu in Render Environment Variables
+    DISCORD_TOKEN, DB_HOST, DB_USER, DB_PASS, DB_NAME, ADMIN_ROLE_ID, PANEL_CHANNEL_ID
 """
 
 import discord
@@ -27,10 +21,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 TOKEN            = os.getenv("DISCORD_TOKEN")
-DB_HOST          = os.getenv("DB_HOST",   "188.212.100.198")
-DB_USER          = os.getenv("DB_USER",   "client266_csgo")
-DB_PASS          = os.getenv("DB_PASS",   "g14t7lNGEQh5")
-DB_NAME          = os.getenv("DB_NAME",   "client266_csgo")
+DB_HOST          = os.getenv("DB_HOST")
+DB_USER          = os.getenv("DB_USER")
+DB_PASS          = os.getenv("DB_PASS")
+DB_NAME          = os.getenv("DB_NAME")
 ADMIN_ROLE_ID    = int(os.getenv("ADMIN_ROLE_ID",    "0"))
 PANEL_CHANNEL_ID = int(os.getenv("PANEL_CHANNEL_ID", "0"))
 
@@ -342,13 +336,6 @@ async def panel(interaction: discord.Interaction):
     await interaction.response.send_message(embed=embed, view=ControlPanel())
 
 
-if __name__ == "__main__":
-    if not TOKEN:
-        print("❌ DISCORD_TOKEN nu e setat in .env!")
-    else:
-        bot.run(TOKEN)
-
-
 # ─────────────────────────────────────────────────────────────────────────────
 # /setup — creaza canalele necesare intr-o categorie selectata
 # ─────────────────────────────────────────────────────────────────────────────
@@ -472,3 +459,10 @@ async def setup(interaction: discord.Interaction, category: discord.CategoryChan
     )
     result_embed.set_footer(text="Panoul de control a fost trimis in #admin-panel")
     await interaction.followup.send(embed=result_embed, ephemeral=True)
+
+
+if __name__ == "__main__":
+    if not TOKEN:
+        print("❌ DISCORD_TOKEN nu e setat in .env!")
+    else:
+        bot.run(TOKEN)
